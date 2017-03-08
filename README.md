@@ -4,6 +4,18 @@
 npm run json-server // starts API server
 PORT=4500 npm start // starts front-end server
 
+# Dev Notes - TO DO
+
+Consider the real-world issues. 
+    What happens when a fetch or POST fails? 
+    What if the fetch takes a while? Show the user some type of spinner. 
+    Determine how to force errors or slow-loading during presentation.
+
+Stretch Goals
+    Implement edit and delete for terms .
+    Implement edit and delete for definitions.
+    Implement edit and delete for users.
+
 
 
 ## TL;DR
