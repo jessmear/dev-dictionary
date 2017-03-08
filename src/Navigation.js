@@ -8,6 +8,11 @@ class Navigation extends Component {
     loggedInUser: React.PropTypes.object,
   }
 
+  state = {
+    wordCount: this.props.wordCount,
+    defCount: this.props.defCount
+  }
+  
   render() {
     const { loggedInUser } = this.context;
 
@@ -20,14 +25,17 @@ class Navigation extends Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
+          <Navbar.Text>
+            <Link to="/terms">Terms</Link>
+          </Navbar.Text>
           <Nav pullRight>
             {loggedInUser && <Navbar.Text>
-              You are currently logged in as <Image className="nav-avatar" src={'/avatars/' + loggedInUser.avatarUrl} />
+               <Image className="nav-avatar" src={'/avatars/' + loggedInUser.avatarUrl} />
               {' '}
               <strong>{loggedInUser.name}</strong>
             </Navbar.Text>}
             {loggedInUser && <Navbar.Text>
-              {'{3}'} definitions
+              You've created {this.props.wordCount} words and {this.props.defCount} definitions!
             </Navbar.Text>}
             {loggedInUser && <LinkContainer to="/logout"><NavItem eventKey={2}>Logout</NavItem></LinkContainer>}
             {!loggedInUser && <LinkContainer to="/login"><NavItem eventKey={2}>Login</NavItem></LinkContainer>}

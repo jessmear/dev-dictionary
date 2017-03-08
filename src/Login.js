@@ -15,7 +15,7 @@ class Login extends Component {
   state = {
     fetchError: null,
     isFetching: false,
-    users: null,
+    users: null
   };
 
   componentWillMount() {
@@ -29,8 +29,11 @@ class Login extends Component {
         this.setState({ users: response })
       })
       .catch(error => this.setState({ fetchError: error.message }))
-      .then(() => this.setState({ isFetching: false }));
+      .then(() => {
+        this.setState({ isFetching: false });
+      });
   }
+
 
   render() {
     const { loggedInUser } = this.context;

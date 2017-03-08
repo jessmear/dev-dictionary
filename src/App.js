@@ -6,7 +6,8 @@ import Login from './Login';
 import Welcome from './Welcome';
 import Dictionary from './Dictionary';
 import TermContainer from './TermContainer';
-import './App.css';
+import commonActions from './commonActions';
+import './css/App.css';
 
 class App extends Component {
   static childContextTypes = {
@@ -19,6 +20,9 @@ class App extends Component {
     const loggedInUser = loggedInUserJson ? JSON.parse(loggedInUserJson) : null;
     this.state = {
       loggedInUser,
+      defCount: null,
+      wordCount: null,
+      userId: null
     };
   }
 
@@ -28,8 +32,15 @@ class App extends Component {
     };
   }
 
+  incrWordCount = () => {
+    var count = this.state.wordCount;
+    count++;
+    this.setState({ wordCount: count });
+  };
+
   markUserLoggedIn = user => {
     this.setState({ loggedInUser: user });
+    this.getCount(user.id);
     localStorage.setItem('loggedInUser', JSON.stringify(user));
   };
 
@@ -38,15 +49,40 @@ class App extends Component {
     localStorage.setItem('loggedInUser', null);
   };
 
+  getCount(user) {
+    var data = '/users?q='+ user +'&_embed=definitions';
+    commonActions.fetchJson(data)
+      .then(response => { 
+        this.setState({ 
+          defCount: response[0]['definitions'].length })
+      })
+      .catch(error => this.setState({ fetchError: error.message }))
+      .then(() => this.setState({ isFetching: false })); 
+
+    data = '/users?q='+ user +'&_embed=terms';
+    commonActions.fetchJson(data)
+      .then(response => { 
+        this.setState({ 
+          wordCount: response[0]['terms'].length })
+        })
+      .catch(error => this.setState({ fetchError: error.message }))
+      .then(() => this.setState({ isFetching: false })); 
+  };
+
+  componentDidMount() {
+    var userId = JSON.parse(localStorage.loggedInUser).id;
+    this.getCount(userId)
+  }
+
   render() {
     return (
       <Router history={browserHistory}>
-        <Route path="/" component={Layout}>
+        <Route path="/" component={props => <Layout { ...props} defCount={this.state.defCount} wordCount={this.state.wordCount} />} >
           <IndexRoute component={Welcome} />
           <Route path="login" component={props => <Login { ...props} markUserLoggedIn={this.markUserLoggedIn} />} />
           <Route path="logout" component={props => <Logout { ...props} markUserLoggedOut={this.markUserLoggedOut} />} />
-          <Route path="terms">
-            <IndexRoute component={Dictionary} />
+          <Route path="terms" >
+            <IndexRoute component={props => <Dictionary { ...props} incrWordCount={this.incrWordCount} incrDefCount={this.incrDefCount} />} />
             <Route path=":termName" component={TermContainer} />
           </Route>
         </Route>

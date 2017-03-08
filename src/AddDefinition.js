@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Col, ControlLabel, Form, FormControl, FormGroup, HelpBlock, Image, Well } from 'react-bootstrap';
 import Select from 'react-select';
-import jsonData from '../data/db';
 import 'react-select/dist/react-select.css';
-
-// TODO: Fetch list of users from server via API.
-const options = jsonData.users;
+import commonActions from './commonActions';
 
 const userComponent = props => {
   const value = props.value ? props.value : props.option
@@ -21,15 +18,57 @@ const userComponent = props => {
 class AddDefinition extends Component {
   static propTypes = {
     hide: React.PropTypes.func.isRequired,
+    termId: React.PropTypes.number.isRequired
+  };
+
+  static contextTypes = {
+    loggedInUser: React.PropTypes.object,
   };
 
   state = {
     who: null,
+    fetchError: null,
+    isFetching: false,
+    options: null,
+    value: ''
   };
 
-  createDefinition = () => {
-    // POST the definition to the server.
+  componentWillMount() {
+    this.setState({ isFetching: true })
+    commonActions.fetchJson('/users')
+      .then(response => {
+        this.setState({ options: response });
+      })
+      .catch(error => this.setState({ fetchError: error.message }))
+      .then(() => this.setState({ isFetching: false }));
   }
+
+  createDefinition = () => {
+    var definer;
+    if(this.state.who) {
+      definer = this.state.who.id;
+    } else {
+      definer = this.context.loggedInUser.id;
+    }
+    var newDef = {
+      userId: definer,
+      content: this.state.value,
+      termId: this.props.termId
+    };
+    commonActions.fetchJson('/definitions', {
+      method: 'POST', 
+      body: newDef})
+      .then(response => {
+        this.props.incrDefCount();
+        //console.log(response)
+      })
+      .catch(error => this.setState({ fetchError: error.message }))
+      .then(() => this.setState({ isFetching: false }));
+  }
+
+  handleChange(e) {
+    this.setState({ value: e.target.value });
+  };
 
   selectWho = user => this.setState({ who: user });
 
@@ -38,14 +77,20 @@ class AddDefinition extends Component {
     const { who } = this.state;
 
     return (
-      <Well className="add-term">
+      <Well className="add-definition">
         <Form horizontal>
-          <FormGroup controlId="formHorizontalEmail">
+          <FormGroup controlId="defInput">
             <Col componentClass={ControlLabel} sm={2}>
               Definition
             </Col>
             <Col sm={10}>
-              <FormControl componentClass="textarea" placeholder="Add your definition"/>
+              <FormControl 
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange.bind(this)}
+                componentClass="textarea" 
+                placeholder="Add your definition"
+              />
             </Col>
           </FormGroup>
 
@@ -55,7 +100,7 @@ class AddDefinition extends Component {
             </Col>
             <Col sm={10}>
               <Select
-                options={options}
+                options={this.state.options}
                 optionComponent={userComponent}
                 ignoreCase
                 onChange={this.selectWho}

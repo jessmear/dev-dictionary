@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Glyphicon } from 'react-bootstrap';
 import { Link } from 'react-router';
+import commonActions from './commonActions';
 
 class Term extends Component {
   static propTypes = {
@@ -9,18 +10,40 @@ class Term extends Component {
     })
   };
 
+  state = {
+    showAddTerm: false,
+    fetchError: null,
+    isFetching: false,
+    termId: 0,
+    termName: "Loading...",
+    termAuthorId: 0
+  };
+
+  componentWillMount() {
+    this.setState({ isFetching: true })
+    var url = '/terms?q=' + this.props.params.termName + '&_limit=1';
+    commonActions.fetchJson(url)
+      .then(response => {
+        this.setState({ 
+          termId: response[0].id,
+          termName: response[0].name,
+          termAuthorId: response[0].userId
+        });        
+      })
+      .catch(error => this.setState({ fetchError: error.message }))
+      .then(() => {this.setState({ isFetching: false })}
+      );
+  }
+
   render() {
     return (
       <div className="term">
         <Link to="/terms">
           <Glyphicon glyph="chevron-left" /> Back to terms
         </Link>
-        <h1>[Term name goes here]</h1>
-        <p>Your job here is to fetch the term and show its definitions. Use the <code>{'<Term>'}</code> component.</p>
-        <p>Reminder: to fetch the term from the server by name, you can use the full text search capability with a limit of 1. For example, if the term in the URL is <strong>Full%20Stack</strong>, then you can use the URL</p>
-        <code>
-          /terms?q=Full%20Stack&_limit=1
-        </code>
+        <h1>    
+          <Term key={this.state.termId} term={this.state.termName} author={this.state.termAuthorId}/>
+        </h1>
       </div>
     );
   }
