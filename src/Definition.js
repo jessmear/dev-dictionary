@@ -40,6 +40,7 @@ class Definition extends Component {
       <div className="def-byline">
         Definition provided by <Image src={'/avatars/' + this.state.avatarUrl} circle />  {this.state.userName}
       </div>
+      
       </div>
     );
   }

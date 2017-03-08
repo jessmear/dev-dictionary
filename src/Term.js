@@ -42,6 +42,7 @@ class Term extends Component {
         <div className="small-byline">
           Term suggested by <Image src={'/avatars/' + this.state.avatarUrl} circle /> {this.state.userName}
         </div>
+        <small className="remove-btn">remove term</small>
         {term.definitions.map((definition, index) => {
           return <Definition key={definition.id} definition={definition} index={index + 1} author={definition.userId}/>
         })}

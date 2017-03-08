@@ -51,6 +51,7 @@ class CommonActions {
       .then(this.checkStatus)
       .then(this.parseJson);
   }
+
 }
 
 export default new CommonActions()

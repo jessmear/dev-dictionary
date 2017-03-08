@@ -9,6 +9,7 @@ class AddTerm extends Component {
 
   static propTypes = {
     hide: React.PropTypes.func.isRequired,
+    incrWordCount: React.PropTypes.func.isRequired,
   };
 
   createTerm = () => {

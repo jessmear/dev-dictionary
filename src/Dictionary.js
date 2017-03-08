@@ -18,11 +18,6 @@ class Dictionary extends Component {
     commonActions.fetchJson('/terms?_embed=definitions')
       .then(response => {
         var terms = response.map(term => {
-          console.log("responseresponseresponse response response response response ")
-          console.log(response)
-          console.log(term.id)
-          console.log(term)
-          console.log(term.userId)
             return <Term key={term.id} term={term} author={term.userId} incrDefCount={this.props.incrDefCount}/>;
           });
         this.setState({ itemList: terms });

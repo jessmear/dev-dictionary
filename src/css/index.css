@@ -75,3 +75,8 @@ h3 {
 .small-byline img, .def-byline img {
   width: 25px;
 }
+
+.remove-btn {
+  text-transform: uppercase;
+  font-weight: 700;
+}

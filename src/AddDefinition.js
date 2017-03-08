@@ -18,6 +18,7 @@ const userComponent = props => {
 class AddDefinition extends Component {
   static propTypes = {
     hide: React.PropTypes.func.isRequired,
+    incrDefCount: React.PropTypes.func.isRequired,
     termId: React.PropTypes.number.isRequired
   };
 
@@ -45,11 +46,7 @@ class AddDefinition extends Component {
 
   createDefinition = () => {
     var definer;
-    if(this.state.who) {
-      definer = this.state.who.id;
-    } else {
-      definer = this.context.loggedInUser.id;
-    }
+    definer = this.state.who ? this.state.who.id : this.context.loggedInUser.id;
     var newDef = {
       userId: definer,
       content: this.state.value,

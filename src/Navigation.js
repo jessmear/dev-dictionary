@@ -35,7 +35,7 @@ class Navigation extends Component {
               <strong>{loggedInUser.name}</strong>
             </Navbar.Text>}
             {loggedInUser && <Navbar.Text>
-              You've created {this.props.wordCount} words and {this.props.defCount} definitions!
+              You've created {this.props.wordCount + (this.props.wordCount === 1 ? " word" : " words")} and {this.props.defCount + (this.props.defCount === 1 ? " definition" : " definitions")}!
             </Navbar.Text>}
             {loggedInUser && <LinkContainer to="/logout"><NavItem eventKey={2}>Logout</NavItem></LinkContainer>}
             {!loggedInUser && <LinkContainer to="/login"><NavItem eventKey={2}>Login</NavItem></LinkContainer>}

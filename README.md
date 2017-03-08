@@ -12,7 +12,7 @@ Consider the real-world issues.
     Determine how to force errors or slow-loading during presentation.
 
 Stretch Goals
-    Implement edit and delete for terms .
+    Implement edit and delete for terms.
     Implement edit and delete for definitions.
     Implement edit and delete for users.
 
