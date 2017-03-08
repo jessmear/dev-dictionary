@@ -95,9 +95,6 @@ The point of the project is for us to have a well known app idea at the start, s
 
 Implement edit and delete for terms and definitions.
 
-Add Giphy to definitions:
-'http://api.giphy.com/v1/gifs/search?q=' + searchPhrase + '&rating=g&api_key=dc6zaTOxFJmzC'
-
 # Need more control?
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app), which doesn't allow configuration by design. But you can provide configuration by first "ejecting" from create-react-app. Search Google for "create-react-app eject".
