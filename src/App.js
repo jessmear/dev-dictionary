@@ -43,7 +43,7 @@ class App extends Component {
     localStorage.setItem('loggedInUser', null);
   };
 
-  // gets the counts for definitions and words creatd by the logged in user
+  // gets the counts for definitions and words created by the logged in user
   getCount(user) {
     var data = '/users?q='+ user +'&_embed=definitions';
     commonActions.fetchJson(data)
