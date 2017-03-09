@@ -2,22 +2,29 @@ import React, { Component } from 'react';
 import { Button, Glyphicon } from 'react-bootstrap';
 import Term from './Term';
 import AddTerm from './AddTerm';
-import jsonData from '../data/db';
-import filter from 'lodash/filter'
-
-// Don't do this. You need to actually fetch the data from the server using
-// the API. This is a cheater way just to provide a visual example of what you
-// should see when you're done.
-const terms = jsonData.terms.map(term => ({
-  ...term,
-  definitions: filter(jsonData.definitions, { termId: term.id })
-}))
-
+import commonActions from './commonActions';
 
 class Dictionary extends Component {
   state = {
-    showAddTerm: false
+    showAddTerm: false,
+    fetchError: null,
+    isFetching: false,
+    termList: null,
+    userList: null,
   };
+
+  componentDidMount() {
+    this.setState({ isFetching: true })
+    commonActions.fetchJson('/terms?_embed=definitions')
+      .then(response => {
+        var terms = response.map(term => {
+            return <Term key={term.id} term={term} author={term.userId} />;
+          });
+        this.setState({ itemList: terms });
+      })
+      .catch(error => this.setState({ fetchError: error.message }))
+      .then(() => this.setState({ isFetching: false }));
+  }
 
   toggleAdd = () => this.setState({ showAddTerm: !this.state.showAddTerm })
 
@@ -32,9 +39,7 @@ class Dictionary extends Component {
         </Button>
         {showAddTerm && <AddTerm hide={this.toggleAdd} />}
         <div className="terms">
-          {terms.map(term => {
-            return <Term key={term.id} term={term} />;
-          })}
+          {this.state.itemList}
         </div>
       </div>
     );

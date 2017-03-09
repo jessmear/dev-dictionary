@@ -1,17 +1,132 @@
 {
-	"terms": [
-		{ "id": 1, "name": "Full stack", "userId": 1 },
-		{ "id": 2, "name": "Design pattern", "userId": 2 }
-	],
-	"definitions": [
-		{ "id": 1, "content": "Able to wear a stack of responsibility hats", "termId": 1, "userId": 1 },
-		{ "id": 2, "content": "Fully able to do the part of the job you like, as well as the stack of crud you don't", "termId": 1, "userId": 2 },
-		{ "id": 3, "content": "3rd definition", "termId": 2, "userId": 1 },
-		{ "id": 4, "content": "4th definition", "termId": 2, "userId": 2 }
-	],
-	"users": [
-		{ "id": 1, "name": "Alice",  "avatarUrl": "alice.png" },
-		{ "id": 2, "name": "Dilbert",  "avatarUrl": "dilbert.png" },
-		{ "id": 3, "name": "Wally",  "avatarUrl": "wally.png" }
-	]
+  "terms": [
+    {
+      "id": 1,
+      "name": "Full stack",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "name": "Design pattern",
+      "userId": 2
+    },
+    {
+      "id": 3,
+      "name": "Smoke test",
+      "userId": 4
+    },
+    {
+      "id": 4,
+      "name": "Unit test",
+      "userId": 4
+    },
+    {
+      "name": "Tech debt",
+      "userId": 4,
+      "id": 5
+    },
+    {
+      "name": "Waterfall",
+      "userId": 4,
+      "id": 6
+    },
+    {
+      "name": "UX",
+      "userId": 3,
+      "id": 7
+    },
+    {
+      "name": "DRY",
+      "userId": 2,
+      "id": 8
+    },
+    {
+      "name": "hi",
+      "userId": 4,
+      "id": 9
+    },
+    {
+      "name": "asdfg",
+      "userId": 4,
+      "id": 10
+    }
+  ],
+  "definitions": [
+    {
+      "id": 1,
+      "content": "Able to wear a stack of responsibility hats",
+      "termId": 1,
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "content": "Fully able to do the part of the job you like, as well as the stack of crud you don't",
+      "termId": 1,
+      "userId": 2
+    },
+    {
+      "id": 3,
+      "content": "3rd definition",
+      "termId": 2,
+      "userId": 4
+    },
+    {
+      "id": 4,
+      "content": "4th definition",
+      "termId": 2,
+      "userId": 2
+    },
+    {
+      "id": 5,
+      "content": "A quick manual test done immediately after pushing a change to the live site to check for any obvious problems. Often followed up with formal QA.",
+      "termId": 3,
+      "userId": 4
+    },
+    {
+      "id": 6,
+      "content": "Testing set up to check for proper output throughout an application to catch accidental errors as soon as they are introduced.",
+      "termId": 4,
+      "userId": 4
+    },
+    {
+      "id": 7,
+      "content": "That thing everyone says we should do that we never have time to get around doing even though it would probably save us time in the long run. See also 'tech debt'.",
+      "termId": 4,
+      "userId": 4
+    },
+    {
+      "userId": 4,
+      "content": "A general solution to a common problem; applicable to many situations.",
+      "termId": 2,
+      "id": 8
+    },
+    {
+      "userId": 4,
+      "content": "Don't Repeat Yourself",
+      "termId": 8,
+      "id": 9
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Alice",
+      "avatarUrl": "alice.png"
+    },
+    {
+      "id": 2,
+      "name": "Dilbert",
+      "avatarUrl": "dilbert.png"
+    },
+    {
+      "id": 3,
+      "name": "Wally",
+      "avatarUrl": "wally.png"
+    },
+    {
+      "id": 4,
+      "name": "Penny",
+      "avatarUrl": "penny.png"
+    }
+  ]
 }

@@ -1,3 +1,25 @@
+* {
+    font-family: 'Titillium Web', sans-serif;
+}
+
+p, div, li {
+  font-size: 16px;
+}
+
+h3 {
+  font-weight: 700;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.row {
+  margin-bottom: 100px;
+}
+/* Default CSS */
+
 .login-screen .users .user {
   margin: 10px 0;
 }
@@ -40,4 +62,21 @@
 .user-select-component {
   cursor: pointer;
   padding: 5px;
+}
+.small-byline, .def-byline {
+  color: gray;
+  font-weight: 200;
+  font-size: 14px;
+}
+
+.def-byline {
+  margin-left: 58px;
+}
+.small-byline img, .def-byline img {
+  width: 25px;
+}
+
+.remove-btn {
+  text-transform: uppercase;
+  font-weight: 700;
 }

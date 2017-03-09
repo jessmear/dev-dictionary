@@ -1,34 +1,59 @@
 import React, { Component } from 'react';
 import { Button, ControlLabel, Form, FormControl, FormGroup, Col, Well } from 'react-bootstrap';
+import commonActions from './commonActions';
 
 class AddTerm extends Component {
+  static contextTypes = {
+    loggedInUser: React.PropTypes.object,
+  };
+
   static propTypes = {
     hide: React.PropTypes.func.isRequired,
   };
 
   createTerm = () => {
-    // POST the term to the server.
-  }
+    var newWord = {name: this.state.value, userId: this.context.loggedInUser.id};
+    commonActions.fetchJson('/terms', {
+      method: 'POST', 
+      body: newWord})
+      .then(response => {
+        //console.log(response)
+      })
+      .catch(error => this.setState({ fetchError: error.message }))
+      .then(() => this.setState({ isFetching: false }));
+  };
+
+  state = {
+      value: ''
+  };
+
+  handleChange(e) {
+    this.setState({ value: e.target.value });
+  };
 
   render() {
     const { hide } = this.props;
-
     return (
       <Well className="add-term">
         <Form horizontal>
-          <FormGroup controlId="formHorizontalEmail">
+          <FormGroup controlId="termInput">
             <Col componentClass={ControlLabel} sm={2}>
               Term
             </Col>
             <Col sm={10}>
-              <FormControl />
+              <FormControl 
+                type="text"
+                value={this.state.value}
+                placeholder="Enter new term"
+                onChange={this.handleChange.bind(this)}
+              />
             </Col>
           </FormGroup>
 
           <FormGroup>
             <Col smOffset={2} sm={10}>
               <Button bsStyle="primary" type="submit" onClick={this.createTerm}>
-                Submit the term
+                Submit new term
               </Button>
               <Button bsStyle="link" onClick={hide}>Cancel</Button>
             </Col>

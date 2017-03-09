@@ -1,13 +1,53 @@
 import React, { Component } from 'react';
 import { Glyphicon } from 'react-bootstrap';
 import { Link } from 'react-router';
+import commonActions from './commonActions';
+import Term from './Term'; 
 
-class Term extends Component {
+
+class TermContainer extends Component {
   static propTypes = {
     params: React.PropTypes.shape({
       termName: React.PropTypes.string.isRequired,
     })
   };
+
+  state = {
+    showAddTerm: false,
+    fetchError: null,
+    isFetching: false,
+    termId: null,
+    userId: null,
+    termName: null,
+    term: null
+  };
+
+  componentDidMount() {
+    this.setState({ isFetching: true })
+    var url = '/terms?q=' + this.props.params.termName + '&_embed=definitions'
+    commonActions.fetchJson(url)
+      .then(response => {
+        this.setState({ 
+          termId: response[0].id,
+          userId: response[0].userId,
+          termName: response[0].name,
+          term: <Term key={response[0].id} term={response[0]} author={response[0].userId}/>
+        });
+      })
+      .catch(error => this.setState({ fetchError: error.message }))
+      .then(() => this.setState({ isFetching: false }));
+
+    this.setState({ isFetching: true })
+    commonActions.fetchJson('/terms?_embed=definitions')
+      .then(response => {
+        var terms = response.map(term => {
+            return <Term key={term.id} term={term} author={term.userId} />;
+          });
+        this.setState({ itemList: terms });
+      })
+      .catch(error => this.setState({ fetchError: error.message }))
+      .then(() => this.setState({ isFetching: false }));
+  }
 
   render() {
     return (
@@ -15,15 +55,10 @@ class Term extends Component {
         <Link to="/terms">
           <Glyphicon glyph="chevron-left" /> Back to terms
         </Link>
-        <h1>[Term name goes here]</h1>
-        <p>Your job here is to fetch the term and show its definitions. Use the <code>{'<Term>'}</code> component.</p>
-        <p>Reminder: to fetch the term from the server by name, you can use the full text search capability with a limit of 1. For example, if the term in the URL is <strong>Full%20Stack</strong>, then you can use the URL</p>
-        <code>
-          /terms?q=Full%20Stack&_limit=1
-        </code>
+        {this.state.term}
       </div>
     );
   }
 }
 
-export default Term;
+export default TermContainer;

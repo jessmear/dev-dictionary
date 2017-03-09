@@ -1,5 +1,23 @@
 # Dev Dictionary
 
+# After Installation QuickStart
+npm run json-server // starts API server
+PORT=4500 npm start // starts front-end server
+
+# Dev Notes - TO DO
+
+Consider the real-world issues. 
+    What happens when a fetch or POST fails? 
+    What if the fetch takes a while? Show the user some type of spinner. 
+    Determine how to force errors or slow-loading during presentation.
+
+Stretch Goals
+    Implement edit and delete for terms.
+    Implement edit and delete for definitions.
+    Implement edit and delete for users.
+
+
+
 ## TL;DR
 
 If you are considering taking on this challenge, you'll be writing some code to fetch data and feeding it to pre-built components.
@@ -30,7 +48,7 @@ Expected time: 2-8 hours
 
     This spins up a simple API server, using [json-server](https://github.com/typicode/json-server). It serves the data from `data/db.json`. It runs on port 4501, but you can change that in `package.json`.
 
-1. Familiarize yourself with URLs for fetching data from json-server. Read their doc. It's simple. E.g. fetching terms would use `http://localhost:4501/terms`. To embed definitions, use `http://localhost:4501/terms?_expand=definitions`.
+1. Familiarize yourself with URLs for fetching data from json-server. Read their doc. It's simple. E.g. fetching terms would use `http://localhost:4501/terms`. To embed definitions, use `http://localhost:4501/terms?_embed=definitions`.
 1. Start the frontend dev server.
 
         $ PORT=4500 npm start
@@ -93,3 +111,46 @@ I like the light-hearted definitions too. Here are a few responses to "What does
 - Full stack means not having to get your changes past the Java team (Joe Fleming)
 - Full stack means your cheapass boss won't pay a proper devops person and makes you do that part too (Luis Montes)
 - Full stack means adding an extra line to your resume after reading a hello world tutorial on Express. (Nick Klepinger)
+
+# Sample API Calls
+
+NOTE: <values> are in plain text, no quotes
+
+All terms:
+http://localhost:4501/terms
+
+All definitions: 
+http://localhost:4501/definitions
+
+All users:
+http://localhost:4501/users
+
+
+All terms and definitions:
+http://localhost:4501/terms?_embed=definitions
+
+All users and definitions:
+http://localhost:4501/users?_embed=definitions
+
+All users and terms:
+http://localhost:4501/users?_embed=terms
+
+
+Seerch for a specific term:
+http://localhost:4501/terms?q=<value>
+
+Search for a specific term and get all matching and their definitions:
+http://localhost:4501/terms?q=<term-value>&_embed=definitions
+
+Search for a specific definition:
+http://localhost:4501/definitions?q=<value>
+
+Search for a specific user:
+http://localhost:4501/users?q=<value>
+
+Search for a specific user and get all matching and their definitions:
+http://localhost:4501/users?q=<user-value>&_embed=definitions
+
+Search for a specific user and get all matching and their terms:
+http://localhost:4501/users?q=<user-value>&_embed=terms
+
