@@ -41,14 +41,13 @@ class TermContainer extends Component {
     commonActions.fetchJson('/terms?_embed=definitions')
       .then(response => {
         var terms = response.map(term => {
-            return <Term key={term.id} term={term} author={term.userId} incrDefCount={this.props.incrDefCount}/>;
+            return <Term key={term.id} term={term} author={term.userId} />;
           });
         this.setState({ itemList: terms });
       })
       .catch(error => this.setState({ fetchError: error.message }))
       .then(() => this.setState({ isFetching: false }));
   }
-
 
   render() {
     return (

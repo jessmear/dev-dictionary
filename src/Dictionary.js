@@ -18,7 +18,7 @@ class Dictionary extends Component {
     commonActions.fetchJson('/terms?_embed=definitions')
       .then(response => {
         var terms = response.map(term => {
-            return <Term key={term.id} term={term} author={term.userId} incrDefCount={this.props.incrDefCount}/>;
+            return <Term key={term.id} term={term} author={term.userId} />;
           });
         this.setState({ itemList: terms });
       })
@@ -37,7 +37,7 @@ class Dictionary extends Component {
         <Button bsStyle="success" onClick={this.toggleAdd}>
           <Glyphicon glyph="plus-sign" /> Add term
         </Button>
-        {showAddTerm && <AddTerm hide={this.toggleAdd} incrWordCount={this.props.incrWordCount} />}
+        {showAddTerm && <AddTerm hide={this.toggleAdd} />}
         <div className="terms">
           {this.state.itemList}
         </div>

@@ -18,7 +18,6 @@ const userComponent = props => {
 class AddDefinition extends Component {
   static propTypes = {
     hide: React.PropTypes.func.isRequired,
-    incrDefCount: React.PropTypes.func.isRequired,
     termId: React.PropTypes.number.isRequired
   };
 
@@ -56,7 +55,6 @@ class AddDefinition extends Component {
       method: 'POST', 
       body: newDef})
       .then(response => {
-        this.props.incrDefCount();
         //console.log(response)
       })
       .catch(error => this.setState({ fetchError: error.message }))

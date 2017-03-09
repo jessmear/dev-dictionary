@@ -32,12 +32,6 @@ class App extends Component {
     };
   }
 
-  incrWordCount = () => {
-    var count = this.state.wordCount;
-    count++;
-    this.setState({ wordCount: count });
-  };
-
   markUserLoggedIn = user => {
     this.setState({ loggedInUser: user });
     this.getCount(user.id);
@@ -49,6 +43,7 @@ class App extends Component {
     localStorage.setItem('loggedInUser', null);
   };
 
+  // gets the counts for definitions and words creatd by the logged in user
   getCount(user) {
     var data = '/users?q='+ user +'&_embed=definitions';
     commonActions.fetchJson(data)
@@ -82,7 +77,7 @@ class App extends Component {
           <Route path="login" component={props => <Login { ...props} markUserLoggedIn={this.markUserLoggedIn} />} />
           <Route path="logout" component={props => <Logout { ...props} markUserLoggedOut={this.markUserLoggedOut} />} />
           <Route path="terms" >
-            <IndexRoute component={props => <Dictionary { ...props} incrWordCount={this.incrWordCount} incrDefCount={this.incrDefCount} />} />
+            <IndexRoute component={Dictionary} />
             <Route path=":termName" component={TermContainer} />
           </Route>
         </Route>

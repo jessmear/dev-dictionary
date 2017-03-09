@@ -9,7 +9,6 @@ class AddTerm extends Component {
 
   static propTypes = {
     hide: React.PropTypes.func.isRequired,
-    incrWordCount: React.PropTypes.func.isRequired,
   };
 
   createTerm = () => {
@@ -19,7 +18,6 @@ class AddTerm extends Component {
       body: newWord})
       .then(response => {
         //console.log(response)
-        this.props.incrWordCount();
       })
       .catch(error => this.setState({ fetchError: error.message }))
       .then(() => this.setState({ isFetching: false }));
